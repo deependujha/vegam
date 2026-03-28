@@ -30,7 +30,7 @@ def create_python_project(
         str | None,
         typer.Option("--output-dir", "-o", help="Output directory"),
     ] = None,
-):
+) -> None:
     base_dir = Path(output_dir).resolve() if output_dir else Path.cwd().resolve()
     project_path = base_dir / project_name
 

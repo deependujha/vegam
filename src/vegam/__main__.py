@@ -12,7 +12,7 @@ vegam_app = typer.Typer(
 
 
 @vegam_app.command()
-def version() -> str:
+def version() -> None:
     """Get the current project version."""
     curr_version = importlib_version("vegam")
     typer.echo(f"vegam CLI version: {curr_version}")

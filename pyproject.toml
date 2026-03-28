@@ -5,6 +5,7 @@ requires = [ "uv-build>=0.10.8,<0.11" ]
 [project]
 name = "vegam"
 version = "0.0.0"
+
 description = "Opinionated CLI to instantly scaffold production-ready Python, C++, and multi-language projects"
 readme = "README.md"
 authors = [
@@ -21,10 +22,48 @@ dependencies = [
   "rich>=14.3.3",
   "typer>=0.24.1",
 ]
-
 scripts.vegam = "vegam.__main__:vegam_app"
 
 [dependency-groups]
 dev = [
+  "mypy>=1.19.1",
   "pre-commit>=4.5.1",
+  "pytest>=9.0.2",
 ]
+
+[tool.pytest.ini_options]
+addopts = [
+  "--strict-markers",
+  "--doctest-modules",
+  "--color=yes",
+  "--disable-pytest-warnings",
+]
+filterwarnings = [ "error::FutureWarning" ]
+junit_duration_report = "call"
+markers = [ "cloud: Run the cloud tests for example" ]
+norecursedirs = [ ".git", ".github", "dist", "build", "docs" ]
+testpaths = [ "tests" ]
+xfail_strict = true
+
+[tool.mypy]
+allow_redefinition = "True"
+disable_error_code = "attr-defined"
+disallow_untyped_defs = "True"
+exclude = [
+  "src/vegam/templates/",
+]
+files = [ "src" ]
+ignore_missing_imports = "True"
+install_types = "True"
+non_interactive = "True"
+show_error_codes = "True"
+warn_no_return = "False"
+warn_redundant_casts = "True"
+warn_unused_configs = "True"
+warn_unused_ignores = "True"
+
+[[tool.mypy.overrides]]
+# generate with:
+# mypy --no-error-summary 2>&1 | tr ':' ' ' | awk '{print $1}' | sort | uniq | sed 's/\.py//g; s|src/||g; s|\/|\.|g'
+ignore_errors = "True"
+module = [  ]

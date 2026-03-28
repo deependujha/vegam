@@ -79,15 +79,23 @@ def _copy_template_directory(
         if "." in template_pkg:
             parent_pkg = ".".join(template_pkg.split(".")[:-1])
             pkg = importlib.import_module(parent_pkg)
-            template_path = Path(pkg.__file__).parent / template_pkg.split(".")[-1]
+            pkg_file = pkg.__file__
+            assert pkg_file is not None, (
+                f"Package {parent_pkg} does not have a __file__ attribute"
+            )
+            template_path = Path(pkg_file).parent / template_pkg.split(".")[-1]
         else:
             pkg = importlib.import_module(template_pkg.split(".")[0])
-            template_path = Path(pkg.__file__).parent / template_pkg.split(".")[-1]
+            pkg_file = pkg.__file__
+            assert pkg_file is not None, (
+                f"Package {template_pkg.split('.')[0]} does not have a __file__ attribute"
+            )
+            template_path = Path(pkg_file).parent / template_pkg.split(".")[-1]
     except Exception:
         # Fallback: try to use resources.files but handle import errors
         try:
             base = resources.files(template_pkg.split(".")[0])
-            template_path = base.joinpath(*template_pkg.split(".")[1:])
+            template_path = Path(str(base.joinpath(*template_pkg.split(".")[1:])))
             if not template_path.exists():
                 raise FileNotFoundError(f"Template directory not found: {template_pkg}")
         except Exception as e:
