@@ -89,12 +89,19 @@ def create_python_project(
     ) as progress:
         progress.add_task(description="Installing dev dependencies...", total=None)
 
-        for dep in ["pytest", "mypy", "pre-commit", "pytest-cov", "ruff"]:
+        for dep in [
+            "pytest",
+            "mypy",
+            "pre-commit",
+            "pytest-cov",
+            "pytest-xdist",
+            "ruff",
+        ]:
             subprocess.run(
                 ["uv", "add", "--dev", dep],
                 cwd=project_path,
                 stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL,  # we want to see if any dependency fails to install
+                stderr=subprocess.DEVNULL,
                 check=True,
             )
 
