@@ -1,17 +1,29 @@
+[build-system]
+build-backend = "uv_build"
+requires = [ "uv-build>=0.10.8,<0.11" ]
+
 [project]
 name = "vegam"
-version = "0.1.0"
+version = "0.0.0"
 description = "Opinionated CLI to instantly scaffold production-ready Python, C++, and multi-language projects"
 readme = "README.md"
 authors = [
-    { name = "deependujha", email = "deependujha21@gmail.com" }
+  { name = "deependujha", email = "deependujha21@gmail.com" },
 ]
 requires-python = ">=3.12"
-dependencies = []
+classifiers = [
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+]
+dependencies = [
+  "typer>=0.24.1",
+]
 
-[project.scripts]
-vegam = "vegam:main"
+scripts.vegam = "vegam:main"
 
-[build-system]
-requires = ["uv_build>=0.10.8,<0.11.0"]
-build-backend = "uv_build"
+[dependency-groups]
+dev = [
+  "pre-commit>=4.5.1",
+]

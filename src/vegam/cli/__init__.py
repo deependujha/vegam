@@ -2,6 +2,4 @@
 
 from vegam.cli.base import vegam_app
 
-
-def main() -> None:
-    vegam_app()
+__all__ = ["vegam_app"]
