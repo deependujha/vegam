@@ -1,2 +1,3 @@
 # credits: https://github.com/deependujha
-"""vegam python module"""
+
+"""vegam templates module."""

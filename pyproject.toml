@@ -22,7 +22,7 @@ dependencies = [
   "typer>=0.24.1",
 ]
 
-scripts.vegam = "vegam:main"
+scripts.vegam = "vegam.__main__:vegam_app"
 
 [dependency-groups]
 dev = [
