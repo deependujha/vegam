@@ -14,23 +14,23 @@ def add_mypy_config(original_content: str) -> str:
 [tool.mypy]
 files = [ "src" ]
 exclude = [ ]
-install_types = "True"
-non_interactive = "True"
-disallow_untyped_defs = "True"
-ignore_missing_imports = "True"
-show_error_codes = "True"
-warn_redundant_casts = "True"
-warn_unused_configs = "True"
-warn_unused_ignores = "True"
-allow_redefinition = "True"
+install_types = true
+non_interactive = true
+disallow_untyped_defs = true
+ignore_missing_imports = true
+show_error_codes = true
+warn_redundant_casts = true
+warn_unused_configs = true
+warn_unused_ignores = true
+allow_redefinition = true
 disable_error_code = "attr-defined"
-warn_no_return = "False"
+warn_no_return = false
 
 [[tool.mypy.overrides]]
 # generate with:
 # mypy --no-error-summary 2>&1 | tr ':' ' ' | awk '{print $1}' | sort | uniq | sed 's/\.py//g; s|src/||g; s|\/|\.|g'
 module = [ ]
-ignore_errors = "True"
+ignore_errors = true
 """
     )
 

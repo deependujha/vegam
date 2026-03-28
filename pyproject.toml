@@ -48,24 +48,24 @@ testpaths = [ "tests" ]
 xfail_strict = true
 
 [tool.mypy]
-allow_redefinition = "True"
+allow_redefinition = true
 disable_error_code = "attr-defined"
-disallow_untyped_defs = "True"
+disallow_untyped_defs = true
 exclude = [
   "src/vegam/templates/",
 ]
 files = [ "src" ]
-ignore_missing_imports = "True"
-install_types = "True"
-non_interactive = "True"
-show_error_codes = "True"
-warn_no_return = "False"
-warn_redundant_casts = "True"
-warn_unused_configs = "True"
-warn_unused_ignores = "True"
+ignore_missing_imports = true
+install_types = true
+non_interactive = true
+show_error_codes = true
+warn_no_return = false
+warn_redundant_casts = true
+warn_unused_configs = true
+warn_unused_ignores = true
 
 [[tool.mypy.overrides]]
 # generate with:
 # mypy --no-error-summary 2>&1 | tr ':' ' ' | awk '{print $1}' | sort | uniq | sed 's/\.py//g; s|src/||g; s|\/|\.|g'
-ignore_errors = "True"
+ignore_errors = true
 module = [  ]
