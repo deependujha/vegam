@@ -1,14 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-CREDITS_LINE="# credits: https://github.com/deependujha"
+CREDITS_LINE="# credits: https://github.com/__GIT_USERNAME__"
 ROOT_DIR="${1:-.}"
 
 find "$ROOT_DIR/src" -type f -name "*.py" -print0 | while IFS= read -r -d '' file; do
-    # Skip files under /templates/, except /templates/__init__.py.
-    if [[ "$file" == *"/templates/"* && "$file" != *"/templates/__init__.py" ]]; then
-        continue
-    fi
     first_line="$(head -n 1 "$file" 2>/dev/null | tr -d '\r')"
     # echo "Checking: $file: $first_line"
 
