@@ -35,9 +35,9 @@ jobs:
         run: |
           uv sync --all-groups
 
-      - name: Run unit tests
+      - name: Run tests
         run: |
-          uv run pytest tests/unit -v --tb=short --cov=src/deepflow --cov-report=xml
+          uv run pytest tests -v --tb=short --cov=src/ --cov-report=xml
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4

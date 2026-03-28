@@ -89,7 +89,7 @@ def create_python_project(
     ) as progress:
         progress.add_task(description="Installing dev dependencies...", total=None)
 
-        for dep in ["pytest", "mypy", "pre-commit"]:
+        for dep in ["pytest", "mypy", "pre-commit", "pytest-cov", "ruff"]:
             subprocess.run(
                 ["uv", "add", "--dev", dep],
                 cwd=project_path,
@@ -137,7 +137,7 @@ def create_python_project(
         )
 
     subprocess.run(
-        ["pre-commit", "install"],
+        ["uv", "run", "pre-commit", "install"],
         cwd=project_path,
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL,
