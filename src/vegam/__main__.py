@@ -1,13 +1,16 @@
 # credits: https://github.com/deependujha
 
-import typer
 from importlib.metadata import version as importlib_version
 
+import typer
+
+from vegam.cpp.commands import create_cpp_project
 from vegam.python.commands import create_python_project
 
 # Main CLI app
 vegam_app = typer.Typer(
-    help="🚀 Vegam: Opinionated CLI to scaffold production-ready projects"
+    help="🚀 Vegam: Opinionated CLI to scaffold production-ready, opinionated, multi-language projects "
+    "(Python/C++/CUDA)"
 )
 
 
@@ -19,6 +22,12 @@ def version() -> None:
 
 
 # Register commands
-vegam_app.command(name="python", help="Initialize a new OpenEnv environment")(
-    create_python_project
-)
+vegam_app.command(
+    name="python",
+    help="scaffold Python projects at speed ⚡",
+)(create_python_project)
+
+vegam_app.command(
+    name="cpp",
+    help="scaffold C++/CUDA & multi-language projects at speed ⚡",
+)(create_cpp_project)
