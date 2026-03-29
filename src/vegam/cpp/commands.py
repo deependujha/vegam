@@ -1,7 +1,8 @@
 # credits: https://github.com/deependujha
 
-import typer
 from typing import Annotated
+
+import typer
 from rich.console import Console
 
 console = Console()

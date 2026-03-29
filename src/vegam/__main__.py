@@ -1,14 +1,16 @@
 # credits: https://github.com/deependujha
 
-import typer
 from importlib.metadata import version as importlib_version
 
-from vegam.python.commands import create_python_project
+import typer
+
 from vegam.cpp.commands import create_cpp_project
+from vegam.python.commands import create_python_project
 
 # Main CLI app
 vegam_app = typer.Typer(
-    help="🚀 Vegam: Opinionated CLI to scaffold production-ready, opinionated, multi-language projects (Python/C++/CUDA)"
+    help="🚀 Vegam: Opinionated CLI to scaffold production-ready, opinionated, multi-language projects "
+    "(Python/C++/CUDA)"
 )
 
 
