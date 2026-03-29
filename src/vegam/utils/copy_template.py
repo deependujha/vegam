@@ -1,11 +1,10 @@
 # credits: https://github.com/deependujha
 # credits: https://github.com/meta-pytorch/OpenEnv/blob/main/src/openenv/cli/commands/init.py
-from pathlib import Path
-from typing import Dict, List, Tuple
 from importlib import resources
+from pathlib import Path
 
 
-def _replace_in_content(content: str, replacements: Dict[str, str]) -> str:
+def _replace_in_content(content: str, replacements: dict[str, str]) -> str:
     """Replace all occurrences in content using case-sensitive replacements."""
     result = content
     # Sort by length (longest first) to avoid partial replacements
@@ -14,9 +13,7 @@ def _replace_in_content(content: str, replacements: Dict[str, str]) -> str:
     return result
 
 
-def _should_rename_file(
-    filename: str, replacements: Dict[str, str]
-) -> Tuple[bool, str]:
+def _should_rename_file(filename: str, replacements: dict[str, str]) -> tuple[bool, str]:
     """
     Check if a file should be renamed and return the new name.
 
@@ -36,7 +33,7 @@ def _should_rename_file(
 def _copy_and_template_file(
     src_path: Path,
     dest_path: Path,
-    replacements: Dict[str, str],
+    replacements: dict[str, str],
 ) -> None:
     """Copy a file and apply template replacements."""
     dest_path.parent.mkdir(parents=True, exist_ok=True)
@@ -56,19 +53,17 @@ def _copy_and_template_file(
             # Binary file, just copy
             dest_path.write_bytes(content)
     except Exception as e:
-        raise RuntimeError(
-            f"Failed to copy template file {src_path} to {dest_path}: {e}"
-        ) from e
+        raise RuntimeError(f"Failed to copy template file {src_path} to {dest_path}: {e}") from e
 
 
 def _copy_template_directory(
     template_pkg: str,
     template_dir: str,
     dest_dir: Path,
-    replacements: Dict[str, str],
-) -> List[Path]:
+    replacements: dict[str, str],
+) -> list[Path]:
     """Recursively copy template directory and apply replacements."""
-    created_files: List[Path] = []
+    created_files: list[Path] = []
 
     # Get the package path using importlib.resources but avoid importing the template package
     # We'll use the package's __file__ to get the directory path
@@ -80,16 +75,12 @@ def _copy_template_directory(
             parent_pkg = ".".join(template_pkg.split(".")[:-1])
             pkg = importlib.import_module(parent_pkg)
             pkg_file = pkg.__file__
-            assert pkg_file is not None, (
-                f"Package {parent_pkg} does not have a __file__ attribute"
-            )
+            assert pkg_file is not None, f"Package {parent_pkg} does not have a __file__ attribute"
             template_path = Path(pkg_file).parent / template_pkg.split(".")[-1]
         else:
             pkg = importlib.import_module(template_pkg.split(".")[0])
             pkg_file = pkg.__file__
-            assert pkg_file is not None, (
-                f"Package {template_pkg.split('.')[0]} does not have a __file__ attribute"
-            )
+            assert pkg_file is not None, f"Package {template_pkg.split('.')[0]} does not have a __file__ attribute"
             template_path = Path(pkg_file).parent / template_pkg.split(".")[-1]
     except Exception:
         # Fallback: try to use resources.files but handle import errors
@@ -99,17 +90,13 @@ def _copy_template_directory(
             if not template_path.exists():
                 raise FileNotFoundError(f"Template directory not found: {template_pkg}")
         except Exception as e:
-            raise FileNotFoundError(
-                f"Template directory not found: {template_pkg}"
-            ) from e
+            raise FileNotFoundError(f"Template directory not found: {template_pkg}") from e
 
     if template_dir:
         template_path = template_path / template_dir
 
     if not template_path.exists() or not template_path.is_dir():
-        raise FileNotFoundError(
-            f"Template directory not found: {template_pkg}.{template_dir}"
-        )
+        raise FileNotFoundError(f"Template directory not found: {template_pkg}.{template_dir}")
 
     # Walk through all files in template directory using Path
     for item in template_path.rglob("*"):
