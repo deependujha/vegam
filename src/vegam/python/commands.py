@@ -1,19 +1,22 @@
 # credits: https://github.com/deependujha
 
-import typer
 import subprocess
 from pathlib import Path
-from vegam.utils import _copy_template_directory
 from typing import Annotated
+
+import typer
 from rich.console import Console
 from rich.panel import Panel
-from rich.progress import SpinnerColumn, TextColumn, Progress
+from rich.progress import Progress, SpinnerColumn, TextColumn
+
 from vegam.python.helpers import (
-    add_pytest_config,
     add_mypy_config,
-    initial_readme_content,
+    add_pytest_config,
+    add_ruff_config,
     get_git_username,
+    initial_readme_content,
 )
+from vegam.utils import _copy_template_directory
 
 console = Console()
 
@@ -114,6 +117,7 @@ def create_python_project(
     content = pyproject_path.read_text()
 
     content = add_pytest_config(content)
+    content = add_ruff_config(content)
     content = add_mypy_config(content)
 
     pyproject_path.write_text(content)
@@ -149,7 +153,8 @@ def create_python_project(
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL,
     )
-    # run pre-commit 3 times, so hooks are installed and any fixes are applied to the codebase. This ensures a clean initial commit.
+    # run pre-commit 3 times, so hooks are installed and any fixes are applied to the codebase.
+    # This ensures a clean initial commit.
     for pre_commit_run in range(3):
         subprocess.run(
             ["git", "add", "."],
@@ -165,14 +170,13 @@ def create_python_project(
         )
         if result.returncode == 0:
             break
-        elif pre_commit_run == 2:
+        if pre_commit_run == 2:
             console.print(
-                "[red]❌ Pre-commit errors still exist after 3 attempts. Please fix them manually or open an issue on GitHub.[/red]"
+                "[red]❌ Pre-commit errors still exist after 3 attempts.\n"
+                "Please fix them manually or open an issue on GitHub.[/red]"
             )
 
-    console.print(
-        "[green]✓[/green] Initialized git repository & installed pre-commit hooks"
-    )
+    console.print("[green]✓[/green] Initialized git repository & installed pre-commit hooks")
 
     # -----------------------------
     # Final output
