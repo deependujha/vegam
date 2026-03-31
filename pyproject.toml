@@ -4,7 +4,7 @@ requires = [ "uv-build>=0.10.8,<0.11" ]
 
 [project]
 name = "vegam"
-version = "0.0.1"
+version = "0.0.2"
 
 description = "Opinionated CLI to instantly scaffold production-ready Python, C++, and multi-language projects"
 readme = "README.md"
